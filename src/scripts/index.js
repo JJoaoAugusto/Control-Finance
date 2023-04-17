@@ -41,17 +41,48 @@ function createCard (arrayCategory, element) {
 }
 insertedValues.forEach(element => createCard(valuesCategory, element)) 
 
+// list.children.length
+function verificationList(){
+    const registerList = document.querySelector('.registers__list')
+    const total = document.querySelector('.sum__content')
+
+    if(registerList.children.length === 0){
+
+        console.log('sim')
+        total = Number(0)
+
+        const register = document.createElement('li')
+        registerList.appendChild(register)
+
+        const button = document.createElement('button')
+        button.innerText = 'Registrar novo valor'
+        register.appendChild(button)
+
+    }
+    else{
+        console.log('não')
+    }
+}
+verificationList()
+
 // FILTRANDO POR TODOS
 
 function filterAll(array) {
     const main = document.querySelector('.main')
+    const registerList = document.querySelector('.registers__list')
     main.addEventListener("click", (event) => {
         if(event.target.classList.contains('todos')){
-            removeRegisters()
-            array.forEach(element => createCard(valuesCategory, element))
-            const totalValue = array.reduce((accumulator, element) => accumulator + element.value, 0);
-            const total = document.querySelector('.sum__content')
-            total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
+            console.log(registerList.children.length)
+            if(registerList.children.length === 0){
+                console.log('sim')
+            }
+            else{
+                removeRegisters()
+                array.forEach(element => createCard(valuesCategory, element))
+                const totalValue = array.reduce((accumulator, element) => accumulator + element.value, 0);
+                const total = document.querySelector('.sum__content')
+                total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
+            }
         }
     })
 }
@@ -61,7 +92,9 @@ filterAll(insertedValues)
 
 function filterInflows(array){
     const main = document.querySelector('.main')
+    const registerList = document.querySelector('.registers__list')
     main.addEventListener('click', (event) => {
+        event.preventDefault()
         if(event.target.classList.contains('entradas')){
             removeRegisters()
             let filterIn = array.filter(element => {
@@ -83,6 +116,7 @@ filterInflows(insertedValues)
 function filterOutflows(array){
     const main = document.querySelector('.main')
     main.addEventListener('click', (event) => {
+        event.preventDefault()
         if(event.target.classList.contains('saidas')){
             removeRegisters()
             let filterOut = array.filter(element => {

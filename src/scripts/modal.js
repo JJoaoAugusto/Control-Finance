@@ -27,7 +27,10 @@ closeModal()
 
 const handleRegisterForm = () => {
     const modal = document.querySelector('dialog')
-    const inputs = document.querySelectorAll('input')
+    const inputInflows = document.querySelector('.category__inflows')
+    const inputOutflows = document.querySelector('.category__outflows')
+    const inputValue = document.querySelector('.modal__content-value')
+
     const button = document.querySelector('.modal__submit')
     let newClient = {}
     let count = 0
@@ -43,24 +46,36 @@ const handleRegisterForm = () => {
             }
         })
 
-        inputs.forEach(input => {
-            if(input.value === ''){
+        if(inputValue.value === ''){
+            count++
+        }
+        else{
+            newClient[inputValue.name] = Number(inputValue.value)
+            inputValue.value = ''
+        }
+
+        const inputRadioVerification = () => {
+            console.log(inputInflows.checked)
+            if(inputInflows.checked){
+                newClient[inputInflows.name] = Number(inputInflows.value)
+                inputInflows.checked = false
+            }
+            else if(inputOutflows.checked){
+                newClient[inputOutflows.name] = Number(inputOutflows.value)
+                inputOutflows.checked = false
+            }
+            else{
                 count++
             }
-            newClient[input.name] = Number(input.value)
-        })
+        }
+        inputRadioVerification()
 
         if(count !== 0){
             count = 0
             return alert('Por favor preencha todos os campos to formulário')
         }
-
         insertedValues.push(newClient)
         newClient = {}
-
-        inputs.forEach(input => {
-            input.value = ''
-        })
 
         removeRegisters()
         insertedValues.forEach(element => createCard(valuesCategory, element))
