@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@600&display=swap");
 
+
 * {
   margin: 0;
   padding: 0;
@@ -42,7 +43,20 @@
 }
 
 body {
-  font-family: var(--font-family-1);
+  font-family: var(--font-family-1); 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  color: var(--color-grey-1);
+}
+
+.main{
+  width: 100%;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {

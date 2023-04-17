@@ -15,10 +15,61 @@
       content="Control Finance - Seu controle financeiro"
     />
     <link rel="stylesheet" href="./src/styles/globalStyles.css" />
-    <link rel="stylesheet" href="./src/styles/index.css" />
+    <link rel="stylesheet" href="./src/styles/header.css" />
+    <link rel="stylesheet" href="./src/styles/filters.css" />
+    <link rel="stylesheet" href="./src/styles/cards.css" />
+    <link rel="stylesheet" href="./src/styles/modal.css" />
   </head>
   <body>
-    <main id="app"></main>
+    <header class="header">
+      <nav class="header__nav">
+        <h1 class="nav__title"><span class="title__purple">Control </span>Finance</h1>
+        <button class="nav__button register">Registrar novo valor</button>
+      </nav>
+    </header>
+    <main id="app" class="main">
+      <div class="main__header">
+        <h2 class="main__title">Resumo Financeiro</h2>
+        <div class="main__nav">
+          <button class="nav__buttons-filters todos">Todos</button>
+          <button class="nav__buttons-filters entradas">Entradas</button>
+          <button class="nav__buttons-filters saidas">Saídas</button>
+        </div>
+      </div>
+      <div class="main__sum">
+        <h3 class="sum__title">Soma dos valores</h3>
+        <span class="sum__content">R$ 0,00</span>
+      </div>
+      <div class="main__registers">
+        <ul class="registers__list">
+        
+        </ul>
+      </div>
+      <dialog>
+        <form class="modal__container">
+          <div class="modal__header">
+            <h2 class="modal__title">Registro de valor</h2>
+            <button class="modal__close">X</button>
+          </div>
+          
+            <span class="modal__instruction">Digite o valor e em seguida aperte no botão referente ao tipo do valor</span>
+            <h3 class="modal__content-title">Valor</h3>
+            <input type="number" placeholder="R$  00,00" name="value" class="modal__content-value">
+          
+          <div class="modal__category">
+            <h3 class="category__title">Tipo de valor</h3>
+            <input type="radio" id="inflows" hidden name="categoryID" class="category__inflows" value="0">
+            <label for="inflows" class="inflows__label">Entrada</label>
+            <input type="radio" id="outflows" hidden name="categoryID" class="category__outflows" value="1">
+            <label for="outflows" class="outflows__label">Saída</label>
+          </div>
+          <div class="modal__footer">
+            <button class="modal__close">Cancelar</button>
+            <button type="submit" class="modal__submit">Inserir valor</button>
+          </div>
+        </form>
+      </dialog>
+    </main>
     <script src="./src/scripts/modal.js"></script>
     <script src="./src/scripts/valuesData.js"></script>
     <script src="./src/scripts/index.js"></script>

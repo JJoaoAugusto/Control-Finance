@@ -1,0 +1,87 @@
+/* ESTILIZANDO FILTROS */
+
+.main__header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-bottom: 1rem;
+}
+
+.main__title{
+    font-weight: var(--font-weight-2);
+    font-size: var(--font-size-2);
+    padding-bottom: 1rem;
+}
+
+.main__nav{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.nav__buttons-filters{
+    padding: 0.5rem;
+    width: 30%;
+    margin: 1rem 0.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 2px solid var(--color-grey-5);
+    color: var(--color-grey-2);
+    font-weight: var(--font-weight-1);
+    font-size: var(--font-size-3);
+}
+
+.nav__buttons-filters:hover{
+    border-color: var(--color-brand-1);
+    color: var(--color-brand-1);
+    background-color: var(--color-brand-3);
+}
+
+/* ESTILIZANDO SOMAS */
+
+.main__sum{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-grey-5);
+    border: 2px solid var(--color-grey-4);
+}
+
+.sum__title{
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-2);
+}
+
+.sum__content{
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-2);
+}
+
+@media(min-width: 700px){
+    .main{
+        width: 700px;
+    }
+
+    .main__header{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .main__nav{
+        width: 60%;
+    }
+}
+
+@media(min-width: 1400px){
+    .main{
+        width: 1200px;
+    }
+}
