@@ -41,10 +41,15 @@ const handleRegisterForm = () => {
         insertedValues.filter(element => {
             let biggerId = 0
             if(element.id > biggerId){
+                
                 biggerId = element.id
                 newValue.id = biggerId + 1
             }
         })
+
+        if(insertedValues.length == 0){
+            newValue.id = 1
+        }
 
         if(inputValue.value === ''){
             count++
@@ -67,21 +72,17 @@ const handleRegisterForm = () => {
         }
 
         if(count > 0){
-            console.log(count)
             count = 0
             return alert('Por favor preencha todos os campos to formulário')
         }
+
         insertedValues.push(newValue)
         newValue = {}
 
-        removeRegisters()
-        
-        insertedValues.forEach(element => createCard(valuesCategory, element))
+        renderArray(insertedValues)
+        verificationList(insertedValues)
        
         modal.close()
-
-        verificationList(insertedValues)
-
     })
 }
 handleRegisterForm()

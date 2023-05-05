@@ -30,7 +30,7 @@ function verificationList(array){
 
 // CRIANDO CARDS
 
-function createCard (arrayCategory, element) {
+function createCard (arrayCategory, element, array) {
 
     const list = document.querySelector('.registers__list')
     const card = document.createElement('li')
@@ -60,25 +60,35 @@ function createCard (arrayCategory, element) {
 
     remove.addEventListener('click', () => {
 
-
-        insertedValues.forEach((element, indice) => {
-            
+        if(array !== insertedValues){
+            insertedValues.forEach((elmt, indice) => {
+                if(elmt.id == card.id){
+                    insertedValues.splice(indice, 1)
+                }
+            })
+        }
+    
+        array.forEach((element, indice) => {
             if(element.id == card.id){
-                console.log('sim')
-                insertedValues.splice(indice, 1)
                 card.remove()
-                verificationList(insertedValues)
-            } 
-            // else{
-            //     console.log('nao')
-            // }
+                array.splice(indice, 1)
+                renderArray(array)
+                verificationList(array)
+            }
         })
-
+        
     })
-    verificationList(insertedValues)
+    verificationList(array)
+}
+
+
+// RENDERIZANDO DE ACORDO COM O ARRAY
+
+function renderArray(array){
+    removeRegisters()
+    array.forEach(element => createCard(valuesCategory, element, array))
 }
 renderArray(insertedValues)
-
 
 
 // FILTRANDO POR TODOS
@@ -132,17 +142,11 @@ function filterOutflows(array){
                 return {element}
             }
         })
+
         renderArray(filterOut)
-        
         verificationList(filterOut)
     })
 }
 filterOutflows(insertedValues)
 
 
-// RENDERIZANDO DE ACORDO COM O ARRAY
-
-function renderArray(array){
-    removeRegisters()
-    array.forEach(element => createCard(valuesCategory, element))
-}
