@@ -1,12 +1,16 @@
+
+
 // REMOVENDO REGISTROS DE VALORES
 function removeRegisters(){
     const list = document.querySelector('.registers__list')
     list.innerHTML = ''
 }
 
+
+
 // VRIFICANDO LISTA VAZIA
 
-function verificationList(){
+function verificationList(array){
     const registerList = document.querySelector('.registers__list')
     const sum = document.querySelector('.sum__content')
     const button = document.querySelector('.new__button')
@@ -16,9 +20,13 @@ function verificationList(){
         button.style.display = "flex"
     }
     else{
+        const totalValue = array.reduce((accumulator, element) => accumulator + element.value, 0);
+        const total = document.querySelector('.sum__content')
+        total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
         button.style.display = "none"
     }
 }
+
 
 // CRIANDO CARDS
 
@@ -52,46 +60,41 @@ function createCard (arrayCategory, element) {
 
     remove.addEventListener('click', () => {
 
-        const listId = element.id
-        console.log(listId)
 
         insertedValues.forEach((element, indice) => {
-            console.log(element)
-            if(element.id == listId){
+            
+            if(element.id == card.id){
+                console.log('sim')
                 insertedValues.splice(indice, 1)
                 card.remove()
-                verificationList()
+                verificationList(insertedValues)
             } 
+            // else{
+            //     console.log('nao')
+            // }
         })
 
     })
-
-    const total = document.querySelector('.sum__content')
-    const totalValue = insertedValues.reduce((accumulator, element) => accumulator + element.value, 0);
-    total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
-
+    verificationList(insertedValues)
 }
 renderArray(insertedValues)
 
+
+
 // FILTRANDO POR TODOS
 
-function filterAll(array) {
+function filterAll() {
     const all = document.querySelector('.todos')
+
     all.addEventListener("click", () => {
-
         removeRegisters()
-
-        array.forEach(element => createCard(valuesCategory, element))
-
-        const totalValue = array.reduce((accumulator, element) => accumulator + element.value, 0);
-
-        const total = document.querySelector('.sum__content')
-        total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
-
-        verificationList()
+        renderArray(insertedValues)
+        verificationList(insertedValues)
     })
 }
-filterAll(insertedValues)
+filterAll()
+
+
 
 // FILTRANDO POR ENTRADAS
 
@@ -107,33 +110,21 @@ function filterInflows(array){
             }
         })
 
-        filterIn.forEach(element => createCard(valuesCategory, element))
-
-        // removeValue(filterIn)
-        // removeValue(insertedValues)
-
-        const totalValue = filterIn.reduce((accumulator, element) => accumulator + element.value, 0);
-
-        const total = document.querySelector('.sum__content')
-        total.innerHTML = `R$ ${totalValue.toFixed(2)}`
-
-        verificationList()
+        renderArray(filterIn)
+        verificationList(filterIn)
     })
 }
 filterInflows(insertedValues)
 
 
 
-
 // FILTRANDO POR SAÍDAS
-
-
-
 
 function filterOutflows(array){
     const outflows = document.querySelector('.saidas')
+
     outflows.addEventListener('click', (event) => {
-        
+
         removeRegisters()
         
         let filterOut = array.filter(element => {
@@ -141,54 +132,17 @@ function filterOutflows(array){
                 return {element}
             }
         })
-        filterOut.forEach(element => createCard(valuesCategory, element))
+        renderArray(filterOut)
         
-        const totalValue = filterOut.reduce((accumulator, element) => accumulator + element.value, 0);
-
-        const total = document.querySelector('.sum__content')
-        total.innerHTML = `R$ ${totalValue.toFixed(2)}`
-        
-        verificationList()
+        verificationList(filterOut)
     })
 }
 filterOutflows(insertedValues)
 
 
-
-
-// REMOVENDO REGISTRO DE VALOR ESPECÍFICO
-
-
-
-
-// function removeValue(array){
-//     const buttonsRemove = document.querySelectorAll('.item__remove')
-//     console.log(buttonsRemove)
-
-//     buttonsRemove.forEach(button => {
-//         console.log(button)
-
-//         button.addEventListener('click', (event) => {
-//             console.log(button)
-
-//             const listId = event.composedPath()[2].id
-//             console.log(listId)
-
-//             array.forEach((element, indice) => {
-//                 console.log(element)
-//                 if(element.id == listId){
-//                     array.splice(indice, 1)
-//                 } 
-//             })
-//             console.log(array)
-            
-//             renderArray(array)
-//         })
-//     })
-// }
+// RENDERIZANDO DE ACORDO COM O ARRAY
 
 function renderArray(array){
     removeRegisters()
     array.forEach(element => createCard(valuesCategory, element))
-    // removeValue(array)
 }

@@ -66,8 +66,6 @@ const handleRegisterForm = () => {
             count++
         }
 
-        console.log(newValue)
-
         if(count > 0){
             console.log(count)
             count = 0
@@ -82,7 +80,7 @@ const handleRegisterForm = () => {
        
         modal.close()
 
-        verificationList()
+        verificationList(insertedValues)
 
     })
 }
