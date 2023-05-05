@@ -1,4 +1,4 @@
-/* ESTILIZANDO MODAL */
+/* ESTILIZANDO INICIO MODAL */
 
 dialog{
     max-width: 90%;
@@ -43,6 +43,8 @@ dialog{
     line-height: 21px;
 }
 
+/* ESTILIZANDO CONTEÚDO DO MODAL */
+
 .modal__content-title{
     margin-bottom: 1rem;
     font-size: var(--font-size-3);
@@ -85,6 +87,8 @@ label{
 label:hover{
     border-color: var(--color-brand-1);
 }
+
+/* ESTILIZANDO PARTE DE BAIXO DO MODAL */
 
 .modal__footer{
     display: flex;

@@ -14,11 +14,11 @@ handleModal()
 // FECHANDO MODAL
 
 function closeModal(){
+    const button = document.querySelector('.modal__close')
     const modal = document.querySelector('dialog')
-    modal.addEventListener('click', (event) => {
-       if(event.target.classList.contains('modal__close')){
+    button.addEventListener('click', (event) => {
+        event.preventDefault()
         modal.close()
-       }
     })
 }
 closeModal()
@@ -32,7 +32,7 @@ const handleRegisterForm = () => {
     const inputValue = document.querySelector('.modal__content-value')
 
     const button = document.querySelector('.modal__submit')
-    let newClient = {}
+    let newValue = {}
     let count = 0
 
     button.addEventListener('click', (event) => {
@@ -42,7 +42,7 @@ const handleRegisterForm = () => {
             let biggerId = 0
             if(element.id > biggerId){
                 biggerId = element.id
-                newClient.id = biggerId + 1
+                newValue.id = biggerId + 1
             }
         })
 
@@ -50,36 +50,40 @@ const handleRegisterForm = () => {
             count++
         }
         else{
-            newClient[inputValue.name] = Number(inputValue.value)
+            newValue.value = Number(inputValue.value)
             inputValue.value = ''
         }
-
-        const inputRadioVerification = () => {
-            console.log(inputInflows.checked)
-            if(inputInflows.checked){
-                newClient[inputInflows.name] = Number(inputInflows.value)
-                inputInflows.checked = false
-            }
-            else if(inputOutflows.checked){
-                newClient[inputOutflows.name] = Number(inputOutflows.value)
-                inputOutflows.checked = false
-            }
-            else{
-                count++
-            }
+            
+        if(inputInflows.checked){
+            newValue.categoryID = Number(inputInflows.value)
+            inputInflows.checked = false
         }
-        inputRadioVerification()
+        else if(inputOutflows.checked){
+            newValue.categoryID = Number(inputOutflows.value)
+            inputOutflows.checked = false
+        }
+        else{
+            count++
+        }
 
-        if(count !== 0){
+        console.log(newValue)
+
+        if(count > 0){
+            console.log(count)
             count = 0
             return alert('Por favor preencha todos os campos to formulário')
         }
-        insertedValues.push(newClient)
-        newClient = {}
+        insertedValues.push(newValue)
+        newValue = {}
 
         removeRegisters()
+        
         insertedValues.forEach(element => createCard(valuesCategory, element))
+       
         modal.close()
+
+        verificationList()
+
     })
 }
 handleRegisterForm()

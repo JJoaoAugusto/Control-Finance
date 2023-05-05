@@ -33,6 +33,10 @@
 }
 
 .nav__buttons-filters:hover{
+    border-color: var(--color-grey-3);
+}
+
+.nav__buttons-filters:focus{
     border-color: var(--color-brand-1);
     color: var(--color-brand-1);
     background-color: var(--color-brand-3);

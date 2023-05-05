@@ -64,6 +64,10 @@ body {
   margin: 0 auto;
 }
 
+button{
+  cursor: pointer;
+}
+
 @media (max-width: 700px) {
   .container {
     max-width: 43rem;

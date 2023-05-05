@@ -4,6 +4,22 @@ function removeRegisters(){
     list.innerHTML = ''
 }
 
+// VRIFICANDO LISTA VAZIA
+
+function verificationList(){
+    const registerList = document.querySelector('.registers__list')
+    const sum = document.querySelector('.sum__content')
+    const button = document.querySelector('.new__button')
+
+    if(registerList.children.length === 0){
+        sum.innerHTML = 'R$ 00.00'
+        button.style.display = "flex"
+    }
+    else{
+        button.style.display = "none"
+    }
+}
+
 // CRIANDO CARDS
 
 function createCard (arrayCategory, element) {
@@ -34,56 +50,45 @@ function createCard (arrayCategory, element) {
     remove.classList.add('item__remove')
     asideValue.appendChild(remove)
 
+    remove.addEventListener('click', () => {
+
+        const listId = element.id
+        console.log(listId)
+
+        insertedValues.forEach((element, indice) => {
+            console.log(element)
+            if(element.id == listId){
+                insertedValues.splice(indice, 1)
+                card.remove()
+                verificationList()
+            } 
+        })
+
+    })
+
     const total = document.querySelector('.sum__content')
     const totalValue = insertedValues.reduce((accumulator, element) => accumulator + element.value, 0);
     total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
 
 }
-insertedValues.forEach(element => createCard(valuesCategory, element)) 
-
-// list.children.length
-function verificationList(){
-    const registerList = document.querySelector('.registers__list')
-    const total = document.querySelector('.sum__content')
-
-    if(registerList.children.length === 0){
-
-        console.log('sim')
-        total = Number(0)
-
-        const register = document.createElement('li')
-        registerList.appendChild(register)
-
-        const button = document.createElement('button')
-        button.innerText = 'Registrar novo valor'
-        register.appendChild(button)
-
-    }
-    else{
-        console.log('não')
-    }
-}
-verificationList()
+renderArray(insertedValues)
 
 // FILTRANDO POR TODOS
 
 function filterAll(array) {
-    const main = document.querySelector('.main')
-    const registerList = document.querySelector('.registers__list')
-    main.addEventListener("click", (event) => {
-        if(event.target.classList.contains('todos')){
-            console.log(registerList.children.length)
-            if(registerList.children.length === 0){
-                console.log('sim')
-            }
-            else{
-                removeRegisters()
-                array.forEach(element => createCard(valuesCategory, element))
-                const totalValue = array.reduce((accumulator, element) => accumulator + element.value, 0);
-                const total = document.querySelector('.sum__content')
-                total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
-            }
-        }
+    const all = document.querySelector('.todos')
+    all.addEventListener("click", () => {
+
+        removeRegisters()
+
+        array.forEach(element => createCard(valuesCategory, element))
+
+        const totalValue = array.reduce((accumulator, element) => accumulator + element.value, 0);
+
+        const total = document.querySelector('.sum__content')
+        total.innerHTML = `R$ ${totalValue.toFixed(2)}` 
+
+        verificationList()
     })
 }
 filterAll(insertedValues)
@@ -91,64 +96,99 @@ filterAll(insertedValues)
 // FILTRANDO POR ENTRADAS
 
 function filterInflows(array){
-    const main = document.querySelector('.main')
-    const registerList = document.querySelector('.registers__list')
-    main.addEventListener('click', (event) => {
-        event.preventDefault()
-        if(event.target.classList.contains('entradas')){
-            removeRegisters()
-            let filterIn = array.filter(element => {
-                if(element.categoryID === 0){
-                    return {element}
-                }
-            })
-            filterIn.forEach(element => createCard(valuesCategory, element))
-            const totalValue = filterIn.reduce((accumulator, element) => accumulator + element.value, 0);
-            const total = document.querySelector('.sum__content')
-            total.innerHTML = `R$ ${totalValue.toFixed(2)}`
-        }
+    const inflows = document.querySelector('.entradas')
+    inflows.addEventListener('click', (event) => {
+
+        removeRegisters()
+
+        let filterIn = array.filter(element => {
+            if(element.categoryID === 0){
+                return {element}
+            }
+        })
+
+        filterIn.forEach(element => createCard(valuesCategory, element))
+
+        // removeValue(filterIn)
+        // removeValue(insertedValues)
+
+        const totalValue = filterIn.reduce((accumulator, element) => accumulator + element.value, 0);
+
+        const total = document.querySelector('.sum__content')
+        total.innerHTML = `R$ ${totalValue.toFixed(2)}`
+
+        verificationList()
     })
 }
 filterInflows(insertedValues)
 
+
+
+
 // FILTRANDO POR SAÍDAS
 
+
+
+
 function filterOutflows(array){
-    const main = document.querySelector('.main')
-    main.addEventListener('click', (event) => {
-        event.preventDefault()
-        if(event.target.classList.contains('saidas')){
-            removeRegisters()
-            let filterOut = array.filter(element => {
-                if(element.categoryID === 1){
-                    return {element}
-                }
-            })
-            filterOut.forEach(element => createCard(valuesCategory, element))
-            const totalValue = filterOut.reduce((accumulator, element) => accumulator + element.value, 0);
-            const total = document.querySelector('.sum__content')
-            total.innerHTML = `R$ ${totalValue.toFixed(2)}`
-        }
+    const outflows = document.querySelector('.saidas')
+    outflows.addEventListener('click', (event) => {
+        
+        removeRegisters()
+        
+        let filterOut = array.filter(element => {
+            if(element.categoryID === 1){
+                return {element}
+            }
+        })
+        filterOut.forEach(element => createCard(valuesCategory, element))
+        
+        const totalValue = filterOut.reduce((accumulator, element) => accumulator + element.value, 0);
+
+        const total = document.querySelector('.sum__content')
+        total.innerHTML = `R$ ${totalValue.toFixed(2)}`
+        
+        verificationList()
     })
 }
 filterOutflows(insertedValues)
 
+
+
+
 // REMOVENDO REGISTRO DE VALOR ESPECÍFICO
 
-function removeValue(array){
-    const main = document.querySelector('.main')
-    main.addEventListener('click', (event) => {
-        if(event.target.classList.contains('item__remove')){
-            const elementId = event.composedPath()[2].id
-            array.forEach((element, indice) => {
-               if(element.id == elementId){
-                return array.splice(indice, 1)
-               }
-            })
-            removeRegisters()
-            array.forEach(element => createCard(valuesCategory, element))
-        }
-    })
-}
-removeValue(insertedValues)
 
+
+
+// function removeValue(array){
+//     const buttonsRemove = document.querySelectorAll('.item__remove')
+//     console.log(buttonsRemove)
+
+//     buttonsRemove.forEach(button => {
+//         console.log(button)
+
+//         button.addEventListener('click', (event) => {
+//             console.log(button)
+
+//             const listId = event.composedPath()[2].id
+//             console.log(listId)
+
+//             array.forEach((element, indice) => {
+//                 console.log(element)
+//                 if(element.id == listId){
+//                     array.splice(indice, 1)
+//                 } 
+//             })
+//             console.log(array)
+            
+//             renderArray(array)
+//         })
+//     })
+// }
+
+function renderArray(array){
+    removeRegisters()
+    array.forEach(element => createCard(valuesCategory, element))
+    // removeValue(array)
+}

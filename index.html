@@ -42,8 +42,11 @@
       </div>
       <div class="main__registers">
         <ul class="registers__list">
-
         </ul>
+        <button class="new__button register">
+          <h3>Nenhum Valor Cadastrado </h3>
+          <span>Registrar novo valor </span>
+        </button>
       </div>
       <dialog>
         <form class="modal__container">
@@ -56,9 +59,9 @@
             <input type="number" placeholder="R$  00,00" name="value" class="modal__content-value">
           <div class="modal__category">
             <h3 class="category__title">Tipo de valor</h3>
-            <input type="radio" id="inflows" hidden name="categoryID" class="category__inflows" value="0">
+            <input type="radio"  id="inflows"  name="radio" class="category__inflows" value="0" hidden>
             <label for="inflows" class="inflows__label">Entrada</label>
-            <input type="radio" id="outflows" hidden name="categoryID" class="category__outflows" value="1">
+            <input type="radio" id="outflows"  name="radio" class="category__outflows" value="1" hidden>
             <label for="outflows" class="outflows__label">Saída</label>
           </div>
           <div class="modal__footer">
